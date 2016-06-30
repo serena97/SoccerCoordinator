@@ -1,4 +1,3 @@
-//: Playground - noun: a place where people can play
 
 import UIKit
 
@@ -91,13 +90,17 @@ let playerGuardianName : [Int: String] = [
     18: "Hyman and Rachel Krustofski"
 ]
 
+var experiencedPlayers: [Int] = []
+var nonExperiencedPlayers: [Int] = []
+
+
 /* Part 2*/
 
 
-//Each team is modeled by an array storing players' index
-var teamDragons : [Int] = []
-var teamSharks : [Int: Bool]
-var teamRaptors : [Int: Bool]
+//Each team is modeled by a dictionary storing players' index and experience status
+var teamDragons : [Int: String] = [:]
+var teamSharks : [Int: String] = [:]
+var teamRaptors : [Int: String] = [:]
 
 //ensures players are distributed evenly; all teams will have same number of players
 let totalPlayerInTeam = playerSoccerExp.count/3
@@ -112,22 +115,63 @@ for (index,experience) in playerSoccerExp {
 }
 
 //number of experienced players per team, assuming there are 3 teams
-var expPlayersPerTeam = numExpPlayers/3
+let expPlayersPerTeam = numExpPlayers/3
 
 
-//temp playerSoccerExp
-var tempPlayerSoccerExp = playerSoccerExp
+/*//temp playerSoccerExp
+var tempPlayerSoccerExp = playerSoccerExp*/
 
-//ensures number of experienced players and number of players are the same for each team
-for(index,experience) in tempPlayerSoccerExp{
-    while(teamDragons.count < totalPlayerInTeam){
-            teamDragons.append(index)
-            var t
-            //if teamDragon's number of true boolean >= expPlayerPerTeam, stop
-        
-        }
+//updates array of experienced players and non experienced
+for(index,experience) in playerSoccerExp{
+    if experience == true {
+        //experiencedPlayers[index] = playerName[index]
+        experiencedPlayers.append(index)
+    } else{
+        //nonExperiencedPlayers[index] = playerName[index]
+        nonExperiencedPlayers.append(index)
     }
     
 }
+
+
+
+//add the experiencedPlayers, according to the number of expPlayersPerTeam into teamDragons
+for i in 1...expPlayersPerTeam { //1 to 3 in this case. 1,2,3 so loops 3 times
+    teamDragons[i] = experiencedPlayers[i] //teamDragons[1] = "Joe Smith"
+    teamRaptors[i] = experiencedPlayers[i] //teamRaptors[8]= "Karl Zargyan"
+    teamSharks[i] = experiencedPlayers[i]
+}
+
+//add the remaining nonExperiencedPlayers into the teams
+for i1 in expPlayersPerTeam...totalPlayerInTeam{ //3 to 6 in this case
+    teamDragons[i1] = nonExperiencedPlayers[i1] //teamDragons[1] = "Joe Smith"
+    teamRaptors[i1] = nonExperiencedPlayers[i1]
+    teamSharks[i1] = nonExperiencedPlayers[i1]
+}
+
+
+/*Part 3
+Create logic that iterates through all three teams of players and generates a personalized letter to the guardians, letting them know which team their child has been placed on and when they should attend their first team team practice. As long as you provide the necessary information (player name, team name, guardians’ names, practice date/time), feel free to have fun with the content of the letter. The team practice dates/times are as follows: Dragons - March 17, 1pm, Sharks - March 17, 3pm, Raptors - March 18, 1pm
+*/
+
+
+for (index,name) in teamDragons{
+    print("To: \(playerGuardianName[index]), Your child \(playerName[index]) from Team Dragon will attend their first team practice on March 17, 1pm")
+}
+
+
+for (index,name) in teamSharks{
+    print("To: \(playerGuardianName[index]), Your child \(playerName[index]) from Team Sharks will attend their first team practice on March 17, 3pm")
+}
+
+for (index,name) in teamRaptors{
+    print("To: \(playerGuardianName[index]), Your child \(playerName[index]) from Team Raptors will attend their first team practice on March 18, 1pm")
+}
+
+
+
+
+
+
 
 
